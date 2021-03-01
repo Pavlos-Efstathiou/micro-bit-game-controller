@@ -10,7 +10,7 @@ baud = 115200
 s = serial.Serial(port) # Don't know what to name this variable
 s.baudrate = baud
 keyboard = Controller()
-keybinds = [str(input("Key that will be pressed when the A button is pressed:\n")), input("Key that will be pressed when the B button is pressed:\n")]
+keybinds = [input("Key that will be pressed when the A button is pressed:\n"), input("Key that will be pressed when the B button is pressed:\n")]
 last = 0
 
 if keybinds[0] == "" or keybinds[1] == "":
