@@ -39,7 +39,7 @@ def main():
     last = 0
 
     if keybinds[0] == "" or keybinds[1] == "" or keybinds[0] == None or keybinds[1] == None:
-        print("Config file not setup will use default keybinds")
+        print("Keybinds not setup, will use default keybinds")
         keybinds = ["d", Key.space]
     else:
         for i in range(len(keybinds)):
