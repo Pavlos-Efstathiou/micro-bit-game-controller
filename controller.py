@@ -21,7 +21,9 @@
 
 """
 Requires Python 3 or later
-Packages to install: pip install pynput
+Packages to install:
+pip install pynput
+pip install pyserial
 """
 
 import serial
