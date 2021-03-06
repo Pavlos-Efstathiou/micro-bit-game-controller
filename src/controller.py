@@ -20,10 +20,12 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 """
+
 Requires Python 3 or later
 Packages to install:
 pip install pynput
 pip install pyserial
+
 """
 
 import serial
@@ -32,7 +34,11 @@ import os
 from pynput.keyboard import Key, Controller
 
 def main():
-    port = "COM3" # This will certainly be different on your machine ex. "COM16"
+    port = str(input("What's the USB port number of your microbit?\nex. on Windows COM3 and on Linux /dev/ttySUSB4\n"))
+    if os.name == "posix":
+        port = f"/dev/ttySUSB{port}/"
+    elif os.name == "nt":
+        port = f"COM{port}"
     baud = 115200
     s = serial.Serial(port) # Don't know what to name this variable
     s.baudrate = baud
