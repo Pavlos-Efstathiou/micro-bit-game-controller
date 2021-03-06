@@ -7,4 +7,4 @@
 - Press the A button to go forward and the B button to jump. (These are the default keybinds)
 - Congratulations, now you can use your micro:bit as a game controller!
 - Or watch this tutorial: 
-https://user-images.githubusercontent.com/60986328/110214667-51fee280-7eae-11eb-9d0c-6fc711cfd521.mp4
+![tutorial](https://user-images.githubusercontent.com/60986328/110214667-51fee280-7eae-11eb-9d0c-6fc711cfd521.mp4)
