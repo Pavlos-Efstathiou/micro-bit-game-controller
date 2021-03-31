@@ -32,6 +32,7 @@ import serial
 import sys
 import os
 from pynput.keyboard import Key, Controller
+from keys import special_keys
 
 def main():
     port = str(input("What's the USB port number of your microbit?\nex. on Windows COM3 and on Linux /dev/ttySUSB4\n"))
@@ -46,17 +47,13 @@ def main():
     keybinds = [input("Key that will be pressed when the A button is pressed:\n"), input("Key that will be pressed when the B button is pressed:\n")]
     last = 0
 
-    if keybinds[0] == "" or keybinds[1] == "" or keybinds[0] == None or keybinds[1] == None:
-        print("Keybinds not setup, will use default keybinds")
-        keybinds = ["d", Key.space]
-    else:
-        for i in range(len(keybinds)):
-            if type(keybinds[i]) is float:
-                print("Float Keybinds invalid")
-                sys.exit();
-            if keybinds[i] == "space":
-                keybinds[i] = Key.space
-                print("space = Key.space")
+    for i in range(len(keybinds)):
+        if keybinds[i] == "" or keybinds[i] == None:
+            print("Keybinds not setup, will use default keybinds")
+            keybinds = ["d", Key.space]
+        for key, value in special_keys.items():
+            if keybinds[i] == key:
+                keybinds[i] == value
     while True:
         serial_output = int(s.read());
         if serial_output != 0:
