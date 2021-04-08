@@ -6,5 +6,5 @@
 - Launch a game or an app
 - Press the A button to go forward and the B button to jump. (These are the default keybinds)
 - Congratulations, you can now use your micro:bit as a game controller!
-- Or watch this tutorial: 
-<div style="width:100%;height:0px;position:relative;padding-bottom:56.250%;"><iframe src="https://streamable.com/e/yl37az" frameborder="0" width="100%" height="100%" allowfullscreen style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden;"></iframe></div>
+- Or watch this tutorial:
+<a href="https://streamable.com/yl37az">![image](/videos/thumbnail.jpg)
