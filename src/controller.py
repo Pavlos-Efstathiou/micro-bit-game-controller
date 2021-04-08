@@ -20,22 +20,43 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 """
-
 Requires Python 3 or later
 Packages to install:
 pip install pynput
 pip install pyserial
-
 """
 
 import serial
 import sys
 import os
 from pynput.keyboard import Key, Controller
-from keys import special_keys
+import time
 
 def main():
-    port = str(input("What's the USB port number of your microbit?\nex. on Windows COM3 and on Linux /dev/ttySUSB4\n"))
+    special_keys = {
+        "alt": Key.alt,
+        "alt gr": Key.alt_gr,
+        "left alt": Key.alt_l,
+        "right alt": Key.alt_r,
+        "caps lock": Key.caps_lock,
+        "ctrl": Key.ctrl,
+        "left ctrl": Key.ctrl_l,
+        "right ctrl": Key.ctrl_r,
+        "delete": Key.delete,
+        "down arrow": Key.down,
+        "end": Key.end,
+        "enter": Key.enter,
+        "f1": Key.f1,
+        "left arrow": Key.left,
+        "right arrow": Key.right,
+        "shift": Key.shift,
+        "left shift": Key.shift_l,
+        "right shift": Key.shift_r,
+        "space": Key.space,
+        "tab": Key.tab,
+        "up arrow": Key.up
+    }
+    port = str(input("What's the serial port number of your microbit?\nex. on Windows COM3 and on Linux /dev/ttySUSB4 (Only type the number of your port)\n"))
     if os.name == "posix":
         port = f"/dev/ttySUSB{port}/"
     elif os.name == "nt":
@@ -51,11 +72,12 @@ def main():
         if keybinds[i] == "" or keybinds[i] == None:
             print("Keybinds not setup, will use default keybinds")
             keybinds = ["d", Key.space]
-        for key, value in special_keys.items():
-            if keybinds[i] == key:
-                keybinds[i] == value
+        for k, v in special_keys.items():
+            if keybinds[i] == k:    
+                keybinds[i] = v
     while True:
         serial_output = int(s.read());
+#       print(str(serial_output))
         if serial_output != 0:
             last = 1
         if serial_output == 1:
@@ -66,7 +88,7 @@ def main():
             keyboard.release(keybinds[0])
             keyboard.release(keybinds[1])
             last = 0
-
+#        time.sleep(0.45)
 if __name__ == "__main__":
     try:
         main()
