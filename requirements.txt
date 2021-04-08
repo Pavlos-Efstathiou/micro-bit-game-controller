@@ -1,2 +1,2 @@
-pyserial
-pynput
+pyserial==3.5
+pynput==1.7.3
