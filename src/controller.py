@@ -30,9 +30,23 @@ import serial
 import sys
 import os
 from pynput.keyboard import Key, Controller
-import time
+from threading import Thread
+from time import sleep
+
+
+def keybinds_setup(keys, special):
+    print("Thread started")
+    for i in range(len(keys)):
+        if keys[i] == "" or keys[i] == None:
+            print("Keybinds not setup, will use default keybinds")
+            keys = ["d", Key.space]
+        for k, v in special.items():
+            if keys[i] == k:    
+                keys[i] = v
+    print("Thread finished function")
 
 def main():
+    os.system("title Micro:bit Game Controller")
     special_keys = {
         "alt": Key.alt,
         "alt gr": Key.alt_gr,
@@ -68,13 +82,10 @@ def main():
     keybinds = [input("Key that will be pressed when the A button is pressed:\n"), input("Key that will be pressed when the B button is pressed:\n")]
     last = 0
 
-    for i in range(len(keybinds)):
-        if keybinds[i] == "" or keybinds[i] == None:
-            print("Keybinds not setup, will use default keybinds")
-            keybinds = ["d", Key.space]
-        for k, v in special_keys.items():
-            if keybinds[i] == k:    
-                keybinds[i] = v
+    thread = Thread(target = keybinds_setup(keybinds, special_keys), args = (10, ))
+    thread.start()
+    thread.join()
+
     while True:
         serial_output = int(s.read());
 #       print(str(serial_output))
@@ -88,7 +99,6 @@ def main():
             keyboard.release(keybinds[0])
             keyboard.release(keybinds[1])
             last = 0
-#        time.sleep(0.45)
 if __name__ == "__main__":
     try:
         main()
