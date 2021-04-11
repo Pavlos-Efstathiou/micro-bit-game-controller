@@ -35,7 +35,7 @@ from time import sleep
 
 
 def keybinds_setup(keys, special):
-    print("Thread started")
+    # print("Thread started")
     for i in range(len(keys)):
         if keys[i] == "" or keys[i] == None:
             print("Keybinds not setup, will use default keybinds")
@@ -43,10 +43,9 @@ def keybinds_setup(keys, special):
         for k, v in special.items():
             if keys[i] == k:    
                 keys[i] = v
-    print("Thread finished function")
+    # print("Thread finished function")
 
 def main():
-    os.system("title Micro:bit Game Controller")
     special_keys = {
         "alt": Key.alt,
         "alt gr": Key.alt_gr,
@@ -59,7 +58,6 @@ def main():
         "delete": Key.delete,
         "down arrow": Key.down,
         "end": Key.end,
-        "enter": Key.enter,
         "f1": Key.f1,
         "left arrow": Key.left,
         "right arrow": Key.right,
@@ -70,11 +68,11 @@ def main():
         "tab": Key.tab,
         "up arrow": Key.up
     }
-    port = str(input("What's the serial port number of your microbit?\nex. on Windows COM3 and on Linux /dev/ttySUSB4 (Only type the number of your port)\n"))
-    if os.name == "posix":
-        port = f"/dev/ttySUSB{port}/"
-    elif os.name == "nt":
-        port = f"COM{port}"
+    port = str(input("What's the serial port number of your microbit?\nex. COM3\n"))
+    # if os.name == "posix":
+    #     port = f"/dev/ttySUSB{port}/"
+    # elif os.name == "nt":
+    #     port = f"COM{port}"
     baud = 115200
     s = serial.Serial(port) # Don't know what to name this variable
     s.baudrate = baud
@@ -88,7 +86,6 @@ def main():
 
     while True:
         serial_output = int(s.read());
-#       print(str(serial_output))
         if serial_output != 0:
             last = 1
         if serial_output == 1:
@@ -101,6 +98,7 @@ def main():
             last = 0
 if __name__ == "__main__":
     try:
+        os.system("title Micro:bit Game controller")
         main()
     except KeyboardInterrupt:
         print("Exiting...")
