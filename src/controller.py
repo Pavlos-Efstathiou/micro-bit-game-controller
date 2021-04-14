@@ -59,6 +59,17 @@ def main():
         "down arrow": Key.down,
         "end": Key.end,
         "f1": Key.f1,
+        "f2": Key.f2,
+        "f3": Key.f3,
+        "f4": Key.f4,
+        "f5": Key.f5,
+        "f6": Key.f6,
+        "f7": Key.f7,
+        "f8": Key.f8,
+        "f9": Key.f9,
+        "f10": Key.f10,
+        "f11": Key.f11,
+        "f12": Key.f12,
         "left arrow": Key.left,
         "right arrow": Key.right,
         "shift": Key.shift,
@@ -80,9 +91,9 @@ def main():
     keybinds = [input("Key that will be pressed when the A button is pressed:\n"), input("Key that will be pressed when the B button is pressed:\n")]
     last = 0
 
-    thread = Thread(target = keybinds_setup(keybinds, special_keys), args = (10, ))
-    thread.start()
-    thread.join()
+    threading = Thread(target = keybinds_setup(keybinds, special_keys), args = (10, ))
+    threading.start()
+    threading.join()
 
     while True:
         serial_output = int(s.read());
