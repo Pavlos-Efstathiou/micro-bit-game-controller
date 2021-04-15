@@ -79,7 +79,7 @@ def main():
         "tab": Key.tab,
         "up arrow": Key.up
     }
-    port = str(input("What's the serial port number of your microbit?\nex. COM3\n"))
+    port = str(input("Serial port that's connected to your micro:bit:\n"))
     # if os.name == "posix":
     #     port = f"/dev/ttySUSB{port}/"
     # elif os.name == "nt":
