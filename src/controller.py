@@ -26,26 +26,28 @@ pip install pynput
 pip install pyserial
 """
 
+# Importing modules
+
 import serial
 import sys
 import os
+import pynput
 from pynput.keyboard import Key, Controller
 from threading import Thread
-from time import sleep
 
 
+# Function which sets up the keybinds
 def keybinds_setup(keys, special):
-    # print("Thread started")
+    # No one likes nested for loops but this has to be done :(
     for i in range(len(keys)):
-        if keys[i] == "" or keys[i] == None:
+        if keys[i] == "":
             print("Keybinds not setup, will use default keybinds")
             keys = ["d", Key.space]
         for k, v in special.items():
             if keys[i] == k:    
                 keys[i] = v
-    # print("Thread finished function")
 
-def main():
+def main(): 
     special_keys = {
         "alt": Key.alt,
         "alt gr": Key.alt_gr,
@@ -77,42 +79,50 @@ def main():
         "right shift": Key.shift_r,
         "space": Key.space,
         "tab": Key.tab,
-        "up arrow": Key.up
+        "up arrow": Key.up,
     }
+
     port = str(input("Serial port that's connected to your micro:bit:\n"))
-    # if os.name == "posix":
-    #     port = f"/dev/ttySUSB{port}/"
-    # elif os.name == "nt":
-    #     port = f"COM{port}"
     baud = 115200
-    s = serial.Serial(port) # Don't know what to name this variable
-    s.baudrate = baud
+    serial_port = serial.Serial(port) 
+    serial_port.baudrate = baud
     keyboard = Controller()
-    keybinds = [input("Key that will be pressed when the A button is pressed:\n"), input("Key that will be pressed when the B button is pressed:\n")]
+    keybinds = [input("key that will be pressed when the A button is pressed:\n"), input("Key that will be pressed when the B button is pressed:\n")]
     last = 0
 
+    # Starts a new thread which setups the keybinds
     threading = Thread(target = keybinds_setup(keybinds, special_keys), args = (10, ))
+    # Starts the thread
     threading.start()
+    # Ensures that this thread has been terminated
     threading.join()
 
     while True:
-        serial_output = int(s.read());
+        # Reads the serial output of your micro:bit
+        serial_output = int(serial_port.read());
+
+        # Presses and releases keys based upon the serial output of your micro:bit
         if serial_output != 0:
             last = 1
         if serial_output == 1:
             keyboard.press(keybinds[0])
         elif serial_output == 2:
-            keyboard.press(keybinds[1])
+            keyboard.press(keybinds[-1])
         elif last != 0:
             keyboard.release(keybinds[0])
-            keyboard.release(keybinds[1])
+            keyboard.release(keybinds[-1])
             last = 0
+
+
 if __name__ == "__main__":
+    # Tries to execute the main function
     try:
         os.system("title Micro:bit Game controller")
         main()
+    # If it detects a KeyboardInterrupt (^c) it exits
     except KeyboardInterrupt:
         print("Exiting...")
+
         try:
             sys.exit(1)
         except SystemExit:

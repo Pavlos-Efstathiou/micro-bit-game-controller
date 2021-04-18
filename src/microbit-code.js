@@ -1,5 +1,5 @@
 /*
-Flash to the micro:bit on https://makecode.microbit.org/
+Flash to your micro:bit on https://makecode.microbit.org/
 on the JavaScript section
 */
 basic.forever(function () {
