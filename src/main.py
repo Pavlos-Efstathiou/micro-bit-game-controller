@@ -19,69 +19,17 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-"""
-Requires Python 3 or later
-Packages to install:
-pip install pynput
-pip install pyserial
-"""
-
 # Importing modules
 
 import serial
 import sys
 import os
-import pynput
 from pynput.keyboard import Key, Controller
 from threading import Thread
-
-
-# Function which sets up the keybinds
-def keybinds_setup(keys, special):
-    # No one likes nested for loops but this has to be done :(
-    for i in range(len(keys)):
-        if keys[i] == "":
-            print("Keybinds not setup, will use default keybinds")
-            keys = ["d", Key.space]
-        for k, v in special.items():
-            if keys[i] == k:    
-                keys[i] = v
+from keybinds import *
 
 def main(): 
-    special_keys = {
-        "alt": Key.alt,
-        "alt gr": Key.alt_gr,
-        "left alt": Key.alt_l,
-        "right alt": Key.alt_r,
-        "caps lock": Key.caps_lock,
-        "ctrl": Key.ctrl,
-        "left ctrl": Key.ctrl_l,
-        "right ctrl": Key.ctrl_r,
-        "delete": Key.delete,
-        "down arrow": Key.down,
-        "end": Key.end,
-        "f1": Key.f1,
-        "f2": Key.f2,
-        "f3": Key.f3,
-        "f4": Key.f4,
-        "f5": Key.f5,
-        "f6": Key.f6,
-        "f7": Key.f7,
-        "f8": Key.f8,
-        "f9": Key.f9,
-        "f10": Key.f10,
-        "f11": Key.f11,
-        "f12": Key.f12,
-        "left arrow": Key.left,
-        "right arrow": Key.right,
-        "shift": Key.shift,
-        "left shift": Key.shift_l,
-        "right shift": Key.shift_r,
-        "space": Key.space,
-        "tab": Key.tab,
-        "up arrow": Key.up,
-    }
-
+    print("Press ctrl+c exit")
     port = str(input("Serial port that's connected to your micro:bit:\n"))
     baud = 115200
     serial_port = serial.Serial(port) 
@@ -90,7 +38,7 @@ def main():
     keybinds = [input("key that will be pressed when the A button is pressed:\n"), input("Key that will be pressed when the B button is pressed:\n")]
     last = 0
 
-    # Starts a new thread which setups the keybinds
+    # Creates a new thread which setups the keybinds
     threading = Thread(target = keybinds_setup(keybinds, special_keys), args = (10, ))
     # Starts the thread
     threading.start()
@@ -113,16 +61,13 @@ def main():
             keyboard.release(keybinds[-1])
             last = 0
 
-
 if __name__ == "__main__":
     # Tries to execute the main function
     try:
-        os.system("title Micro:bit Game controller")
         main()
-    # If it detects a KeyboardInterrupt (^c) it exits
+    # If a KeyboardInterrupt (^c) gets detected this script stops
     except KeyboardInterrupt:
         print("Exiting...")
-
         try:
             sys.exit(1)
         except SystemExit:

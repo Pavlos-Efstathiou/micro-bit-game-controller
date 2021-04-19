@@ -1,10 +1,11 @@
 # Python Game Controller for the BBC micro:bit
-# WARNING: This only works on Windows. I'll be happy if anyone forks this project to make it compatible with Linux and MacOS
+# WARNING: I'm not sure if this code works on MacOS or Linux. If it doesn't please submit a pull request to fix all compatibility issues
 ## Instructions
-- Flash the code at the microbit-code.js file to your micro:bit on https://makecode.microbit.org/ on the Javascript section or visit this <a href="https://makecode.microbit.org/_Mi91HcdUtKXV">url</a> and flash the code to your microbit
-- Execute this command on the git command line on Windows ```./install-windows.bat```
+- Make sure you have pip and Python 3.0 and up installed. You can install both <a href="https://python.org/downloads">here</a>. When Installing Python choose to install pip and have Python in path.
+- Flash the code on the microbit-code.js file to your micro:bit on https://makecode.microbit.org/ on the Javascript section, or visit this <a href="https://makecode.microbit.org/_2rU3xv6fjXKE">url</a> and flash the code to your micro:bit there.
 - Launch a game or an app
-- Press the A button to go forward and the B button to jump. (These are the default keybinds)
+- Execute this command on Command Prompt ```windows-installer.bat``` which installs all required dependencies and launches the app.
+- If you have not set any keybinds the default ones are: D mapped to the A button and Space to the B button
 - Congratulations, you can now use your micro:bit as a game controller!
-- Or watch this tutorial:
-<a href="https://streamable.com/yl37az">![image](/videos/thumbnail.jpg)
+<!-- - Or watch this tutorial: -->
+<!-- <a href="https://streamable.com/yl37az">![image](/videos/thumbnail.jpg) -->
