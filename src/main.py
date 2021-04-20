@@ -1,49 +1,31 @@
-# Copyright (c) 2021 Pavlos Efstathiou
-#
-# Permission is hereby granted, free of charge, to any person obtaining
-# a copy of this software and associated documentation files (the
-# "Software"), to deal in the Software without restriction, including
-# without limitation the rights to use, copy, modify, merge, publish,
-# distribute, sublicense, and/or sell copies of the Software, and to
-# permit persons to whom the Software is furnished to do so, subject to
-# the following conditions:
-#
-# The above copyright notice and this permission notice shall be
-# included in all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 # Importing modules
 
-import serial
-import sys
-import os
 from pynput.keyboard import Key, Controller
 from threading import Thread
 from keybinds import *
+import serial
+import sys
+import os
 
-def main(): 
-    print("Press ctrl+c exit")
+def main():
     port = str(input("Serial port that's connected to your micro:bit:\n"))
     baud = 115200
     serial_port = serial.Serial(port) 
     serial_port.baudrate = baud
     keyboard = Controller()
-    keybinds = [input("key that will be pressed when the A button is pressed:\n"), input("Key that will be pressed when the B button is pressed:\n")]
+    keybinds = [input("Key(s) that will be pressed when the A button is pressed:\n"),
+                input("Key(s) that will be pressed when the B button is pressed:\n")]
     last = 0
 
     # Creates a new thread which setups the keybinds
-    threading = Thread(target = keybinds_setup(keybinds, special_keys), args = (10, ))
+    setupThread = Thread(target = keybinds_setup(keybinds), args = (1, ))
     # Starts the thread
-    threading.start()
+    setupThread.start()
     # Ensures that this thread has been terminated
-    threading.join()
+    setupThread.join()
+    print("Press ctrl+c to exit")
+
+    isString = isStr(keybinds)
 
     while True:
         # Reads the serial output of your micro:bit
@@ -52,13 +34,22 @@ def main():
         # Presses and releases keys based upon the serial output of your micro:bit
         if serial_output != 0:
             last = 1
+        # This is the opposite of elegant code, but I don't think theres another way to do this
         if serial_output == 1:
-            keyboard.press(keybinds[0])
+            if isString[0]:
+                keyboard.type(keybinds[0])
+            else:
+                keyboard.press(keybinds[0])
         elif serial_output == 2:
-            keyboard.press(keybinds[-1])
+            if isString[1]:
+                keyboard.type(keybinds[1])
+            else:
+                keyboard.press(keybinds[1])
         elif last != 0:
-            keyboard.release(keybinds[0])
-            keyboard.release(keybinds[-1])
+            if not isString[0]:
+                keyboard.release(keybinds[0])
+            if not isString[1]:
+                keyboard.release(keybinds[1])
             last = 0
 
 if __name__ == "__main__":

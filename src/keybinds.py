@@ -1,4 +1,3 @@
-import pynput
 from pynput.keyboard import Key 
 
 special_keys = {
@@ -34,13 +33,29 @@ special_keys = {
     "tab": Key.tab,
     "up arrow": Key.up,
 }
+
 # Function which sets up the keybinds
-def keybinds_setup(keys, special):
+def keybinds_setup(keys):
     # No one likes nested for loops but this has to be done :(
     for i in range(len(keys)):
         if keys[i] == "":
             print("Keybinds not setup, will use default keybinds")
             keys = ["d", Key.space]
-        for k, v in special.items():
-            if keys[i] == k:    
+        for k, v in special_keys.items():
+           if isinstance(keys[i], str) and k in keys[i] or keys[i] == k:    
                 keys[i] = v
+
+# This is dumb...
+def isStr(keys):
+    isNotKey = [False, False]
+    for i in range(len(keys)):
+        if isinstance(keys[i], str):
+            isNotKey[i] = True
+        else:
+           isNotKey[i] = False
+    return isNotKey
+
+
+# Support for using the mouse will be added soon
+def mouse_setup():
+    pass
