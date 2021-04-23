@@ -13,8 +13,10 @@ def main():
     serial_port = serial.Serial(port) 
     serial_port.baudrate = baud
     keyboard = Controller()
-    keybinds = [input("Key(s) that will be pressed when the A button is pressed:\n"),
-                input("Key(s) that will be pressed when the B button is pressed:\n")]
+    keybinds = [
+            input("Key(s) that will be pressed when the A button is pressed:\n"),
+            input("Key(s) that will be pressed when the B button is pressed:\n")
+    ]
     last = 0
 
     # Creates a new thread which setups the keybinds
@@ -23,7 +25,8 @@ def main():
     setupThread.start()
     # Ensures that this thread has been terminated
     setupThread.join()
-    print("Press ctrl+c to exit")
+
+    print("Press CTRL+C to exit")
 
     isString = isStr(keybinds)
 
