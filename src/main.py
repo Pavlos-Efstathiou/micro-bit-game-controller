@@ -27,8 +27,8 @@ def main():
     setupThread.join()
 
     print("Press CTRL+C to exit")
-
-    isString = isStr(keybinds)
+    
+    isString = list(map(lambda x: isinstance(x, str), keybinds))
 
     while True:
         # Reads the serial output of your micro:bit

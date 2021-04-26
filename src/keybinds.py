@@ -40,22 +40,11 @@ def keybinds_setup(keys):
     for i in range(len(keys)):
         if keys[i] == "":
             print("Keybinds not setup, will use default keybinds")
-            keys = ["d", Key.space]
+            keys[0] = "d"
+            keys[1] = "space"
         for k, v in special_keys.items():
-           if isinstance(keys[i], str) and k in keys[i] or keys[i] == k:    
+           if isinstance(keys[i], str) and keys[i] == k:
                 keys[i] = v
-
-# This is dumb...
-def isStr(keys):
-    isNotKey = [False, False]
-    for i in range(len(keys)):
-        if isinstance(keys[i], str):
-            isNotKey[i] = True
-        else:
-           isNotKey[i] = False
-    return isNotKey
-
-
 # Support for using the mouse will be added soon
 def mouse_setup():
     pass
