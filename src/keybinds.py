@@ -40,6 +40,7 @@ def keybinds_setup(keys):
     for i in range(len(keys)):
         if keys[i] == "":
             print("Keybinds not setup, will use default keybinds")
+            # Very bad, bad, bad code
             keys[0] = "d"
             keys[1] = "space"
         for k, v in special_keys.items():

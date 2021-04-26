@@ -28,7 +28,7 @@ def main():
 
     print("Press CTRL+C to exit")
     
-    isString = list(map(lambda x: isinstance(x, str), keybinds))
+    is_str = list(map(lambda x: isinstance(x, str), keybinds))
 
     while True:
         # Reads the serial output of your micro:bit
@@ -37,21 +37,21 @@ def main():
         # Presses and releases keys based upon the serial output of your micro:bit
         if serial_output != 0:
             last = 1
-        # This is the opposite of elegant code, but I don't think theres another way to do this
+        # This is the opposite of elegant code, but I don't think theres a better way of doing this
         if serial_output == 1:
-            if isString[0]:
+            if is_str[0]:
                 keyboard.type(keybinds[0])
             else:
                 keyboard.press(keybinds[0])
         elif serial_output == 2:
-            if isString[1]:
+            if is_str[1]:
                 keyboard.type(keybinds[1])
             else:
                 keyboard.press(keybinds[1])
         elif last != 0:
-            if not isString[0]:
+            if not is_str[0]:
                 keyboard.release(keybinds[0])
-            if not isString[1]:
+            if not is_str[1]:
                 keyboard.release(keybinds[1])
             last = 0
 
