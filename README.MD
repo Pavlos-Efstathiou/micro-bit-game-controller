@@ -5,7 +5,6 @@
 - Flash the code on the microbit-code.js file to your micro:bit on https://makecode.microbit.org/ on the Javascript section, or visit this <a href="https://makecode.microbit.org/_DusduUh4VDV3">url</a> and flash the code to your micro:bit there.
 - Launch a game or an app
 - Execute this command on Command Prompt ```windows-installer.bat``` which installs all required dependencies and launches the app.
-- If you have not set any keybinds the default ones are: D mapped to the A button and Space to the B button
 - Congratulations, you can now use your micro:bit as a game controller!
 <!-- - Or watch this tutorial: -->
 <!-- <a href="https://streamable.com/yl37az">![image](/videos/thumbnail.jpg) -->

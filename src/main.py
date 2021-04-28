@@ -1,16 +1,17 @@
 # Importing modules
 
-from pynput.keyboard import Key, Controller
+from pynput.keyboard import Controller
 from threading import Thread
-from keybinds import *
+from keybinds import keybinds_setup
 import serial
 import sys
 import os
 
+
 def main():
     port = str(input("Serial port that's connected to your micro:bit:\n"))
     baud = 115200
-    serial_port = serial.Serial(port) 
+    serial_port = serial.Serial(port)
     serial_port.baudrate = baud
     keyboard = Controller()
     keybinds = [
@@ -20,19 +21,19 @@ def main():
     last = 0
 
     # Creates a new thread which setups the keybinds
-    setupThread = Thread(target = keybinds_setup(keybinds), args = (1, ))
+    setupThread = Thread(target=keybinds_setup(keybinds), args=(1, ))
     # Starts the thread
     setupThread.start()
     # Ensures that this thread has been terminated
     setupThread.join()
 
     print("Press CTRL+C to exit")
-    
+
     is_str = list(map(lambda x: isinstance(x, str), keybinds))
 
     while True:
         # Reads the serial output of your micro:bit
-        serial_output = int(serial_port.read());
+        serial_output = int(serial_port.read())
 
         # Presses and releases keys based upon the serial output of your micro:bit
         if serial_output != 0:
@@ -54,6 +55,7 @@ def main():
             if not is_str[1]:
                 keyboard.release(keybinds[1])
             last = 0
+
 
 if __name__ == "__main__":
     # Tries to execute the main function

@@ -1,4 +1,6 @@
-from pynput.keyboard import Key 
+from pynput.keyboard import Key
+from printy import printy
+from monad import Failure  # Don't worry i'll use this later
 
 special_keys = {
     "alt": Key.alt,
@@ -34,18 +36,15 @@ special_keys = {
     "up arrow": Key.up,
 }
 
+
 # Function which sets up the keybinds
 def keybinds_setup(keys):
     # No one likes nested for loops but this has to be done :(
     for i in range(len(keys)):
         if keys[i] == "":
-            print("Keybinds not setup, will use default keybinds")
-            # Very bad, bad, bad code
-            keys[0] = "d"
-            keys[1] = "space"
+            current_button = "A" if i == 0 else "B"
+            button_string = f"[kB{{r}}]Warning:\nThe {current_button} button is not mapped to any key(s)!@"
+            printy(button_string)
         for k, v in special_keys.items():
-           if isinstance(keys[i], str) and keys[i] == k:
+            if isinstance(keys[i], str) and keys[i] == k:
                 keys[i] = v
-# Support for using the mouse will be added soon
-def mouse_setup():
-    pass
