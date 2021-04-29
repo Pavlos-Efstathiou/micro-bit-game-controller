@@ -1,17 +1,22 @@
 # Importing modules
 
+from keybinds import keybinds_setup, exit_app
 from pynput.keyboard import Controller
 from threading import Thread
-from keybinds import keybinds_setup
+from monad import Failure
+from printy import printy
 import serial
-import sys
-import os
 
 
 def main():
     port = str(input("Serial port that's connected to your micro:bit:\n"))
     baud = 115200
-    serial_port = serial.Serial(port)
+    serial_port = Failure(port) | serial.Serial
+    if serial_port.is_failed():
+        printy("[r>B]Error:\nCould not access serial port or serial port does not exist")
+        exit_app()
+    else:
+        serial_port = serial_port.get()
     serial_port.baudrate = baud
     keyboard = Controller()
     keybinds = [
@@ -64,7 +69,4 @@ if __name__ == "__main__":
     # If a KeyboardInterrupt (^c) gets detected this script stops
     except KeyboardInterrupt:
         print("Exiting...")
-        try:
-            sys.exit(1)
-        except SystemExit:
-            os._exit(1)
+        exit_app()

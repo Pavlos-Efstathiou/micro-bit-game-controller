@@ -1,6 +1,7 @@
 from pynput.keyboard import Key
 from printy import printy
-from monad import Failure  # Don't worry i'll use this later
+import os
+import sys
 
 special_keys = {
     "alt": Key.alt,
@@ -37,13 +38,20 @@ special_keys = {
 }
 
 
+def exit_app():
+    try:
+        sys.exit(1)
+    except SystemExit:
+        os._exit(1)
+
+
 # Function which sets up the keybinds
 def keybinds_setup(keys):
     # No one likes nested for loops but this has to be done :(
     for i in range(len(keys)):
         if keys[i] == "":
             current_button = "A" if i == 0 else "B"
-            button_string = f"[kB{{r}}]Warning:\nThe {current_button} button is not mapped to any key(s)!@"
+            button_string = f"[yB]Warning:\nThe {current_button} button is not mapped to any key(s)!@"
             printy(button_string)
         for k, v in special_keys.items():
             if isinstance(keys[i], str) and keys[i] == k:

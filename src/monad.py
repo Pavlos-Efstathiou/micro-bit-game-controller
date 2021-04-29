@@ -1,6 +1,7 @@
 # Source:
 # https://medium.com/swlh/monads-in-python-e3c9592285d6
-# This is like the Maybe monad in Haskell
+# This is similar to the Failure Monad in Haskell
+
 class Failure():
     def __init__(self, value, failed=False):
         self.value = value
@@ -13,7 +14,7 @@ class Failure():
         return self.failed
 
     def __str__(self):
-        return ' '.join([str(self.value), str(self.failed)])
+        return " ".join([str(self.value), str(self.failed)])
 
     def bind(self, f):
         if self.failed:
